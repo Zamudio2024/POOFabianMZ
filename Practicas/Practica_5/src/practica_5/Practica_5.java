@@ -15,7 +15,21 @@ public class Practica_5 {
      * @param args the command line arguments
      */
     public static void main(String[] args) { //<>
-        // TODO code application logic here
+        
+        int  PRI,SEG,SIG;
+        
+        PRI =0;
+        SEG =1;
+        SIG =0;
+        for (int i = 3; i <= 180 ; i++) {
+            SIG = PRI + SEG;
+            PRI = SEG;
+            SEG = SIG;
+            
+            
+        }
+        
+        System.out.println("El numero siguiente es: "+SIG);
     }
     
 }
