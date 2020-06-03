@@ -13,13 +13,20 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -33,6 +40,7 @@ public class VentanaComponentes extends JFrame {
     private JButton botonArchivo;
     private JComboBox combo;
     private JLabel etiqueta;
+    private JTextArea area;
 
     public VentanaComponentes() throws HeadlessException {
         super("Elementos swing");
@@ -45,11 +53,14 @@ public class VentanaComponentes extends JFrame {
         combo = new JComboBox(frutas);
         etiqueta = new JLabel("Hola mundo");
         etiqueta.setForeground(new Color(245,234, 123, 254));
+        area = new JTextArea(3,5);
         super.getContentPane().add(entrada);
         super.getContentPane().add(bt1);
         super.getContentPane().add(botonArchivo);
         super.getContentPane().add(combo);
         super.getContentPane().add(etiqueta);
+        super.getContentPane().add(area);
+        
         combo.addActionListener(new EventosItems());
        /*Combo.addMouseListener(new MouseAdapter() {
             @Override
@@ -66,6 +77,21 @@ public class VentanaComponentes extends JFrame {
                 jfc.showOpenDialog(null);
                 File archivo = jfc.getSelectedFile();
                 System.out.println("Ruta: "+ archivo.getAbsolutePath());
+                try {
+                    FileReader fr = new FileReader(archivo);
+                    BufferedReader bf = new BufferedReader(fr);
+                    String linea = "";
+                    do{
+                    linea = bf.readLine();
+                    area.setText(area.getText()+linea + "\n");
+                    }while (linea != null);
+                
+                } catch (FileNotFoundException ex) {
+                    System.out.println("Error al leer el archivo!!!");
+                }catch(IOException u){
+                    System.out.println("Error en la lectura");
+                }
+                
             }
             
 });
